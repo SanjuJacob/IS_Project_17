@@ -13,12 +13,20 @@ struct nfcCard {
   uint8_t uid[7]; // Max UID length
   uint8_t uidLength;
 };
-nfcCard cards[8]; // Array to store up to 6 different cards
-int cardCount[8]; // Array to store the count for each card
-bool isIn[8]; 
+nfcCard cards[6]; // Array to store up to 6 different cards
+int cardCount[6]; // Array to store the count for each card
+bool isIn[6]; 
 int cardIndex = 0;
 //----------------------------------------------------------------------//
 
-int ledPin = D3;   // PWM pin for the LED  
-int count;
+int ledPin = D6;   // PWM pin for the LED  
+int Count;
 
+//---------------------------------------------------------------------------------------//
+ 
+int interruptpin = D7;
+volatile bool stateauto = false;
+void IRAM_ATTR button_intfunc() {
+stateauto = !stateauto;
+}
+//----------------------------------------------------------------------//

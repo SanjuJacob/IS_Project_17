@@ -2,8 +2,6 @@
 #include "Lib.h"
 #include "Def.h"
 
-
-
 void setup(){
 
   Serial.begin(115200);
@@ -26,7 +24,7 @@ void setup(){
   //display.println("Hello World");
   //display.display();
   //-------------------------------------------------//
-   nfc.begin();
+  nfc.begin();
   if (!nfc.getFirmwareVersion())
   {
     Serial.print("Didn't find PN53x board"); // when the board is not found.
@@ -37,17 +35,25 @@ void setup(){
   }
 //-------------------------------------------------------//
 pinMode(ledPin, OUTPUT);// Set LED pin as output
-  int Count = 0;
+int Count = 0;
+
+//--------------------------------------------------------//
+pinMode(interruptpin, INPUT_PULLUP);
+attachInterrupt(digitalPinToInterrupt(interruptpin), button_intfunc, FALLING);
 
 }
 
 void loop()
 
 {
+  if (!stateauto) {
 
+  
   float temp = dht22.readTemperature(); //Read the temperature
   float hum = dht22.readHumidity(); // Read the humidity
+
 //--------------------------------------------------------------------------------//
+
   display.print("Temp in C: "); // Code for printing Temp AND Hum in OLED
   display.println(temp);
   display.display();
@@ -57,7 +63,9 @@ void loop()
   delay(1000);
   display.clearDisplay();
   display.setCursor(0,28);
+
 //---------------------------------------------------------------------------------//
+  
   Serial.print("Temperature in C: ");
   Serial.print(temp);
   Serial.print(" C");
@@ -66,8 +74,10 @@ void loop()
   Serial.println(hum);
   Serial.println();
   delay(2000); //Measure temp and hum in Serial monitor
- //--------------------------------------------------------------------------------// 
- int Count = getCount();
+
+ //-------------------------------------------------------------------------------// 
+
+  int Count = getCount();
   Serial.print("Count: "); // get the count value from the functions.
   Serial.println(Count);
   delay(1000);
@@ -188,6 +198,18 @@ if(Count>0){
       }
   }
 //-----------------------------------------------------------------------------//
+ 
+}
+
+ else {
+  //Serial.print("insideelse");
+  analogWrite(ledPin, 0);
+  display.display();
+  display.clearDisplay();
+  serv1.write(90); 
+  serv2.write(90);
+  delay(1000);
+ }
 
 }
 

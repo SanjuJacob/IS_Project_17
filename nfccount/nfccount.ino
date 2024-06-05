@@ -7,7 +7,7 @@ struct nfcCard {
   uint8_t uidLength;
 };
 
-nfcCard cards[6]; // Array to store up to 100 different cards
+nfcCard cards[6]; // Array to store up to 6 different cards
 int cardCount[6]; // Array to store the count for each card
 bool isIn[6]; 
 int cardIndex = 0;
