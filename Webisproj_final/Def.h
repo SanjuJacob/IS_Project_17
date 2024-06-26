@@ -20,13 +20,48 @@ int cardIndex = 0;
 //----------------------------------------------------------------------//
 
 int ledPin = D6;   // PWM pin for the LED  
-int Count;
 
 //---------------------------------------------------------------------------------------//
- 
 int interruptpin = D7;
 volatile bool stateauto = false;
 void IRAM_ATTR button_intfunc() {
 stateauto = !stateauto;
 }
-//----------------------------------------------------------------------//
+//-------------------------------------------------------//
+
+int temperature =0;
+int humidity = 0;
+int pos=0;
+int currentCount = 0;
+void Controlservotemp();
+
+//----------------optimum value---------------------------------------------//
+int optimvalue=0;
+
+
+//-----------------Manual Operation Code-----------------------------------// 
+int currentTemperature =0;
+int optimum =0;
+uint16_t manualops;
+uint16_t tempinmain;
+uint16_t huminmain;
+uint16_t opttemp;
+uint16_t ledbright;
+uint16_t inputtemp;
+uint16_t positionMax;
+
+volatile bool manual = false;
+
+const char* ssid = "eduroam";
+const char* password = "Sanjac_03";
+
+void sliderled( Control* sender, int value );
+void SwitchChanged(Control* sender, int type);
+void temperatureset(Control *sender, int value);
+void optimumset(Control *sender, int type);
+float getOptval();
+
+
+//-----------------------------------------------------------//
+
+
